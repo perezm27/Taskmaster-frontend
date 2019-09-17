@@ -70,6 +70,8 @@ function History(props) {
   return (
     <div>
     <img src={props.image}/>
+    <img src ={props.image ? [props.image.slice(0, 31), '-resized', props.image.slice(31)].join('') : ''}/>
+  
     <ol>
       {props.history.map( (record,idx) => {
 
