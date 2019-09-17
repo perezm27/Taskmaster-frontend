@@ -69,7 +69,7 @@ function History(props) {
   console.log("props IMG: " + props.image)
   return (
     <div>
-    <img src={props.image}/>
+    <img id="original" src={props.image}/>
     <img src ={props.image ? [props.image.slice(0, 31), '-resized', props.image.slice(31)].join('') : ''}/>
   
     <ol>
