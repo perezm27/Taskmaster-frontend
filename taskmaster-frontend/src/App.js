@@ -3,10 +3,9 @@ import DataTable from 'react-data-table-component';
 
 import './app.scss';
 
-const API = 'http://taskmaster-env.3te35qtepv.us-west-2.elasticbeanstalk.com/api/v1/tasks';
+const API = 'https://pm5plikooh.execute-api.us-west-2.amazonaws.com/Dev/tasks';
 
 let form = new FormData();
-// let taskId;
 
 function App() {
 
@@ -15,7 +14,7 @@ function App() {
   function _getTasks() {
     fetch(API)
       .then( data => data.json() )
-      .then( fetchedTasks => setTasks(fetchedTasks) );
+      .then( fetchedTasks => setTasks(fetchedTasks.Items) );
   }
 
   function _handleChange(event) {
@@ -25,9 +24,9 @@ function App() {
 
   function _upload(event, taskId) {
     event.preventDefault();
-    fetch(`${API}/${taskId}/images`, {
+    fetch(`http://taskmaster-env.3te35qtepv.us-west-2.elasticbeanstalk.com/api/v1/tasks/${taskId}/images`, {
       method: "POST",
-      mode: 'no-cors',
+      mode: 'cors',
       body: form,
     })
     .then(response => response.json())
@@ -55,7 +54,7 @@ function App() {
                   </form>
 
                 </summary>
-                <History history={task.userHistory ? task.userHistory : []} image={task.img} />
+                <History history={task.userHistory ? task.userHistory : []} image={task.iMG} />
               </details>
             </li>
           )
@@ -69,8 +68,8 @@ function History(props) {
   console.log("props IMG: " + props.image)
   return (
     <div>
-    <img id="original" src={props.image}/>
-    <img src ={props.image ? [props.image.slice(0, 31), '-resized', props.image.slice(31)].join('') : ''}/>
+    <img id="original" src={props.image} alt=''/>
+    <img src ={props.image ? [props.image.slice(0, 31), '-resized', props.image.slice(31)].join('') : ''} alt=''/>
   
     <ol>
       {props.history.map( (record,idx) => {
