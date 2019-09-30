@@ -34,11 +34,31 @@ function App() {
     .then(response => console.log('Success:', response));
   }
 
+  function _handleSubmit(event) {
+    event.preventDefault();
+    fetch(`${API}`,{
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      mode: 'cors',
+      body: JSON.stringify(form),
+    })
+    .then(response => response.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => console.log('Success:', response));
+  }
+
 
   useEffect( _getTasks, [] );
 
   return (
     <div className="app">
+      <form onSubmit={(e) => _handleSubmit(e)} action={API} method="post">
+      <label>
+        Subscribe:
+      </label>
+      <input onChange={_handleChange} type="number" name="subscribe" />
+      <button type="submit">Subscribe</button>
+      </form>
       <ul>
         {tasks.map( (task,idx) => {
           return (
